@@ -5,7 +5,7 @@ Slice your test suite in chunks to run it in parallel.
 Install phpunit-slicer using Composer:
 
 ```
-composer require
+composer require wizaplace/phpunit-slicer
 ```
 
 Instead of running your test suite with `vendor/bin/phpunit`, run phpunit-slicer instead:
