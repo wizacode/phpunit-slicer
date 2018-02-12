@@ -7,7 +7,7 @@ Slice your [PHPUnit](https://phpunit.de/) test suite in chunks to run it in para
 Install phpunit-slicer using Composer:
 
 ```
-composer require wizaplace/phpunit-slicer
+composer require --dev wizaplace/phpunit-slicer
 ```
 
 Instead of running your test suite with `vendor/bin/phpunit`, run phpunit-slicer instead:
