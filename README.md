@@ -1,5 +1,7 @@
 Slice your test suite in chunks to run it in parallel.
 
+[![Build Status](https://travis-ci.org/wizaplace/phpunit-slicer.svg?branch=master)](https://travis-ci.org/wizaplace/phpunit-slicer)
+
 ## Usage
 
 Install phpunit-slicer using Composer:
