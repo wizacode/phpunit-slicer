@@ -1,4 +1,4 @@
-Slice your test suite in chunks to run it in parallel.
+Slice your [PHPUnit](https://phpunit.de/) test suite in chunks to run it in parallel.
 
 [![Build Status](https://travis-ci.org/wizaplace/phpunit-slicer.svg?branch=master)](https://travis-ci.org/wizaplace/phpunit-slicer)
 
@@ -22,3 +22,7 @@ PHPUnit-slicer is mainly useful for continuous integration: it allows to run a l
 
 - `vendor/bin/phpunit-slicer --slices 1/2`
 - `vendor/bin/phpunit-slicer --slices 2/2`
+
+## License
+
+This project is released under [the MIT license](LICENSE).
