@@ -16,7 +16,7 @@ class Command extends \PHPUnit\TextUI\Command
     public function slicesHandler($slices)
     {
         $parts = [];
-        if (!preg_match('/^([0-9])+\/([0-9])+$/', $slices, $parts)) {
+        if (!preg_match('/^([0-9]+)\/([0-9]+)$/', $slices, $parts)) {
             echo '--slices: you must provide a value like 2/4 if you want to run the second slice on a total of 4';
             exit(1);
         }
