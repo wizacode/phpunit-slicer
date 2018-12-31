@@ -22,14 +22,17 @@ class TestSuiteSlicer
             array_slice($tests, $offset, $testsPerSlice)
         );
 
+        $lastTestId = min($offset+$testsPerSlice, $total);
+        $testsInThisSlice = $lastTestId - $offset;
+
         echo sprintf(
             'PHPUnit suite slicer, running slice %d/%d (%d test%s: from #%d to #%d)'.PHP_EOL,
             $current+1,
             $slices,
-            $testsPerSlice,
-            $testsPerSlice > 1 ? 's' : '',
-            $offset,
-            min($offset+$testsPerSlice, $total)
+            $testsInThisSlice,
+            $testsInThisSlice > 1 ? 's' : '',
+            $offset+1,
+            $lastTestId
         );
     }
 

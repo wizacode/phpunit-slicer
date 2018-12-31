@@ -44,7 +44,7 @@ class TestSuiteSlicerTest extends TestCase
 
         $output = ob_get_clean();
 
-        self::assertEquals("PHPUnit suite slicer, running slice 1/2 (10 tests: from #0 to #10)\n", $output);
+        self::assertEquals("PHPUnit suite slicer, running slice 1/2 (10 tests: from #1 to #10)\n", $output);
         self::assertCount(10, $suite);
 
         $testsNames = array_map(function(TestCase $test) {
@@ -76,7 +76,7 @@ class TestSuiteSlicerTest extends TestCase
 
         $output = ob_get_clean();
 
-        self::assertEquals("PHPUnit suite slicer, running slice 2/2 (10 tests: from #10 to #19)\n", $output);
+        self::assertEquals("PHPUnit suite slicer, running slice 2/2 (9 tests: from #11 to #19)\n", $output);
         self::assertCount(9, $suite);
 
         $testsNames = array_map(function(TestCase $test) {
@@ -107,7 +107,7 @@ class TestSuiteSlicerTest extends TestCase
 
         $output = ob_get_clean();
 
-        self::assertEquals("PHPUnit suite slicer, running slice 3/3 (7 tests: from #14 to #19)\n", $output);
+        self::assertEquals("PHPUnit suite slicer, running slice 3/3 (5 tests: from #15 to #19)\n", $output);
         self::assertCount(5, $suite);
 
         $testsNames = array_map(function(TestCase $test) {
