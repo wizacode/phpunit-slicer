@@ -14,7 +14,7 @@ class TestSuiteSlicerTest extends TestCase
      */
     private static $tested;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
@@ -26,7 +26,7 @@ class TestSuiteSlicerTest extends TestCase
         ]);
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
 
