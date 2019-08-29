@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestSuite;
 
 class TestRunner extends \PHPUnit\TextUI\TestRunner
 {
-    public function doRun(Test $suite, array $arguments = [], $exit = true): TestResult
+    public function doRun(Test $suite, array $arguments = [], bool $exit = true): TestResult
     {
         if (isset($arguments['totalSlices'], $arguments['currentSlice']) && $suite instanceof TestSuite) {
             $localArguments = $arguments;
