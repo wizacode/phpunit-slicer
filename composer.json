@@ -3,7 +3,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.1",
-        "phpunit/phpunit": "^7|^8"
+        "phpunit/phpunit": "^7|^8|^9"
     },
     "autoload": {
         "psr-4": {
