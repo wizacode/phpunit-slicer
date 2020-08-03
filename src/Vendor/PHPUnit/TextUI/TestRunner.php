@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace PHPUnit\TextUI;
+namespace Wizaplace\PHPUnit\Slicer\Vendor\PHPUnit\TextUI;
 
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestResult;
@@ -33,6 +33,8 @@ use PHPUnit\TextUI\Configuration\Configuration;
 use PHPUnit\TextUI\Configuration\ExtensionHandler;
 use PHPUnit\TextUI\Configuration\PhpHandler;
 use PHPUnit\TextUI\Configuration\Registry;
+use PHPUnit\TextUI\DefaultResultPrinter;
+use PHPUnit\TextUI\ResultPrinter;
 use PHPUnit\Util\Filesystem;
 use PHPUnit\Util\Log\JUnit;
 use PHPUnit\Util\Log\TeamCity;
@@ -59,7 +61,7 @@ use SebastianBergmann\Timer\Timer;
 /**
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-final class TestRunner extends BaseTestRunner
+class TestRunner extends BaseTestRunner
 {
     public const SUCCESS_EXIT = 0;
 
@@ -853,7 +855,7 @@ final class TestRunner extends BaseTestRunner
     /**
      * @throws Exception
      */
-    private function handleConfiguration(array &$arguments): void
+    protected function handleConfiguration(array &$arguments): void
     {
         if (isset($arguments['configuration']) &&
             !$arguments['configuration'] instanceof Configuration) {

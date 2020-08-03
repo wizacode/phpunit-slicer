@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace PHPUnit\TextUI;
+namespace Wizaplace\PHPUnit\Slicer\Vendor\PHPUnit\TextUI;
 
 use PharIo\Manifest\ApplicationName;
 use PharIo\Manifest\Exception as ManifestException;
@@ -26,6 +26,7 @@ use PHPUnit\TextUI\Configuration\Generator;
 use PHPUnit\TextUI\Configuration\PhpHandler;
 use PHPUnit\TextUI\Configuration\Registry;
 use PHPUnit\TextUI\Configuration\TestSuiteMapper;
+use PHPUnit\TextUI\Help;
 use PHPUnit\Util\FileLoader;
 use PHPUnit\Util\Filesystem;
 use PHPUnit\Util\Printer;
@@ -127,7 +128,7 @@ class Command
     /**
      * Create a TestRunner, override in subclasses.
      */
-    protected function createRunner(): TestRunner
+    protected function createRunner()
     {
         return new TestRunner($this->arguments['loader']);
     }
