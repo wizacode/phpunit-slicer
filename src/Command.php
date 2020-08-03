@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Wizaplace\PHPUnit\Slicer;
 
-class Command extends \PHPUnit\TextUI\Command
+use Wizaplace\PHPUnit\Slicer\Vendor\PHPUnit\TextUI\Command as BaseCommand;
+
+class Command extends BaseCommand
 {
     public function __construct()
     {
@@ -51,7 +53,7 @@ Slices Options:
 EOT;
     }
 
-    protected function createRunner(): \PHPUnit\TextUI\TestRunner
+    protected function createRunner()
     {
         return new TestRunner($this->arguments['loader']);
     }
