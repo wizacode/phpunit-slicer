@@ -1,6 +1,6 @@
 Slice your [PHPUnit](https://phpunit.de/) test suite in chunks to run it in parallel.
 
-[![Build Status](https://travis-ci.org/wizaplace/phpunit-slicer.svg?branch=master)](https://travis-ci.org/wizaplace/phpunit-slicer)
+[![Build Status](https://github.com/wizaplace/phpunit-slicer/workflows/tests/badge.svg)](https://github.com/wizaplace/phpunit-slicer/actions)
 
 ## Usage
 
