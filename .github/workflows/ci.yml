@@ -5,10 +5,19 @@ on: [push]
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    strategy:
+      php-versions: [ '7.1', '7.2', '7.3', '7.4' ]
+    name: PHP ${{ matrix.php-versions }}
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: php-actions/composer@v1 # or alternative dependency management
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: composer:v1
+      - name: composer
+        run: composer install --no-interaction
       - name: phpunit
-        run: |
-          sudo vendor/bin/phpunit
+        run: vendor/bin/phpunit
