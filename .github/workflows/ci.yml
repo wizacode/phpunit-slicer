@@ -1,0 +1,14 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: php-actions/composer@v1 # or alternative dependency management
+      - name: phpunit
+        run: |
+          sudo vendor/bin/phpunit
