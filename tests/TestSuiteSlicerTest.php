@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Wizaplace\PHPUnit\Slicer;
+namespace Wizaplace\PHPUnit\Tests\Slicer;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestSuite;
+use Wizaplace\PHPUnit\Slicer\TestSuiteSlicer;
 
-class TestSuiteSlicerTest extends TestCase
+final class TestSuiteSlicerTest extends TestCase
 {
     /**
      * @var TestSuite
@@ -20,9 +21,9 @@ class TestSuiteSlicerTest extends TestCase
 
         self::$tested = new TestSuite();
         self::$tested->addTestFiles([
-            __DIR__.'/fixtures/ATest.php',
-            __DIR__.'/fixtures/BTest.php',
-            __DIR__.'/fixtures/CTest.php',
+            __DIR__ . '/Fixtures/ATest.php',
+            __DIR__ . '/Fixtures/BTest.php',
+            __DIR__ . '/Fixtures/CTest.php',
         ]);
     }
 
@@ -33,7 +34,7 @@ class TestSuiteSlicerTest extends TestCase
         self::$tested = null;
     }
 
-    public function test slice first half()
+    public function test_slice_first_half()
     {
         $suite = clone self::$tested;
         self::assertCount(19, $suite);
@@ -52,20 +53,20 @@ class TestSuiteSlicerTest extends TestCase
         }, $this->extractTestsInSuite($suite));
 
         self::assertEquals([
-            'test A',
-            'test B',
-            'test C',
-            'test D',
-            'test E',
-            'test F',
-            'test G',
-            'test H',
-            'test I',
-            'test J',
+            'test_A',
+            'test_B',
+            'test_C',
+            'test_D',
+            'test_E',
+            'test_F',
+            'test_G',
+            'test_H',
+            'test_I',
+            'test_J',
         ], $testsNames);
     }
 
-    public function test slice second half()
+    public function test_slice_second_half()
     {
         $suite = clone self::$tested;
         self::assertCount(19, $suite);
@@ -84,19 +85,19 @@ class TestSuiteSlicerTest extends TestCase
         }, $this->extractTestsInSuite($suite));
 
         self::assertEquals([
-            'test K',
-            'test L',
-            'test M with data set #0',
-            'test M with data set #1',
-            'test M with data set #2',
-            'test M with data set #3',
-            'test M with data set #4',
-            'test N',
-            'test O',
+            'test_K',
+            'test_L',
+            'test_M with data set #0',
+            'test_M with data set #1',
+            'test_M with data set #2',
+            'test_M with data set #3',
+            'test_M with data set #4',
+            'test_N',
+            'test_O',
         ], $testsNames);
     }
 
-    public function test slice last third()
+    public function test_slice_last_third()
     {
         $suite = clone self::$tested;
         self::assertCount(19, $suite);
@@ -115,11 +116,11 @@ class TestSuiteSlicerTest extends TestCase
         }, $this->extractTestsInSuite($suite));
 
         self::assertEquals([
-            'test M with data set #2',
-            'test M with data set #3',
-            'test M with data set #4',
-            'test N',
-            'test O',
+            'test_M with data set #2',
+            'test_M with data set #3',
+            'test_M with data set #4',
+            'test_N',
+            'test_O',
         ], $testsNames);
     }
 

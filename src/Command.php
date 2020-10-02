@@ -4,13 +4,42 @@ declare(strict_types=1);
 
 namespace Wizaplace\PHPUnit\Slicer;
 
+use PHPUnit\Framework\TestSuite;
+
 class Command extends \PHPUnit\TextUI\Command
 {
     public function __construct()
     {
         $this->longOptions['slices='] = 'slicesHandler';
+    }
 
-        // there is no parent construct
+    public static function main(bool $exit = true): int
+    {
+        return (new static)->runSlicer($_SERVER['argv'], $exit);
+    }
+
+    public function runSlicer(array $argv, bool $exit = true): int
+    {
+        $this->handleArguments($argv);
+
+        $runner = $this->createRunner();
+
+        if ($this->arguments['test'] instanceof TestSuite) {
+            $suite = $this->arguments['test'];
+        } else {
+            $suite = $runner->getTest(
+                $this->arguments['test'],
+                $this->arguments['testSuffixes']
+            );
+        }
+
+        if (isset($this->arguments['totalSlices'], $this->arguments['currentSlice'])) {
+            TestSuiteSlicer::slice($suite, $this->arguments);
+        }
+
+        $this->arguments['test'] = $suite;
+
+        return $this->run($_SERVER['argv'], $exit);
     }
 
     public function slicesHandler($slices)
@@ -49,10 +78,5 @@ Slices Options:
   --slices <current>/<total>  Run a specific part of the suite.
 
 EOT;
-    }
-
-    protected function createRunner(): \PHPUnit\TextUI\TestRunner
-    {
-        return new TestRunner($this->arguments['loader']);
     }
 }
