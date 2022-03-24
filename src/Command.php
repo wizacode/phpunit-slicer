@@ -51,7 +51,7 @@ Slices Options:
 EOT;
     }
 
-    protected function createRunner(): \PHPUnit\TextUI\TestRunner
+    protected function createRunner(): TestRunner
     {
         return new TestRunner($this->arguments['loader']);
     }
