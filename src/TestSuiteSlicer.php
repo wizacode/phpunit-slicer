@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestSuite;
 
 class TestSuiteSlicer
 {
-    public static function slice(TestSuite $suite, array $arguments)
+    public static function slice(TestSuite $suite, array $arguments): TestSuite
     {
         $tests = self::extractTestsInSuite($suite);
 
@@ -34,6 +34,8 @@ class TestSuiteSlicer
             $offset+1,
             $lastTestId
         );
+
+        return $suite;
     }
 
     private static function extractTestsInSuite(TestSuite $suite) : array
