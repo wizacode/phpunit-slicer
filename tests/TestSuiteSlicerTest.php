@@ -33,6 +33,15 @@ class TestSuiteSlicerTest extends TestCase
         self::$tested = null;
     }
 
+    public function testSliceReturnsATestSuiteObject(): void
+    {
+        $suite = clone self::$tested;
+
+        $modifiedSuite = TestSuiteSlicer::slice($suite, ['currentSlice' => 1, 'totalSlices' => 2]);
+
+        self::assertInstanceOf(TestSuite::class, $modifiedSuite);
+    }
+
     public function testSliceFirstHalf()
     {
         $suite = clone self::$tested;
@@ -40,16 +49,16 @@ class TestSuiteSlicerTest extends TestCase
 
         ob_start();
 
-        TestSuiteSlicer::slice($suite, ['currentSlice' => 1, 'totalSlices' => 2]);
+        $modifiedSuite = TestSuiteSlicer::slice($suite, ['currentSlice' => 1, 'totalSlices' => 2]);
 
         $output = ob_get_clean();
 
         self::assertEquals("PHPUnit suite slicer, running slice 1/2 (10 tests: from #1 to #10)\n", $output);
-        self::assertCount(10, $suite);
+        self::assertCount(10, $modifiedSuite);
 
         $testsNames = array_map(function(TestCase $test) {
             return $test->getName();
-        }, $this->extractTestsInSuite($suite));
+        }, $this->extractTestsInSuite($modifiedSuite));
 
         self::assertEquals([
             'testA',
@@ -72,16 +81,16 @@ class TestSuiteSlicerTest extends TestCase
 
         ob_start();
 
-        TestSuiteSlicer::slice($suite, ['currentSlice' => 2, 'totalSlices' => 2]);
+        $modifiedSuite = TestSuiteSlicer::slice($suite, ['currentSlice' => 2, 'totalSlices' => 2]);
 
         $output = ob_get_clean();
 
         self::assertEquals("PHPUnit suite slicer, running slice 2/2 (9 tests: from #11 to #19)\n", $output);
-        self::assertCount(9, $suite);
+        self::assertCount(9, $modifiedSuite);
 
         $testsNames = array_map(function(TestCase $test) {
             return $test->getName();
-        }, $this->extractTestsInSuite($suite));
+        }, $this->extractTestsInSuite($modifiedSuite));
 
         self::assertEquals([
             'testK',
@@ -103,16 +112,16 @@ class TestSuiteSlicerTest extends TestCase
 
         ob_start();
 
-        TestSuiteSlicer::slice($suite, ['currentSlice' => 3, 'totalSlices' => 3]);
+        $modifiedSuite = TestSuiteSlicer::slice($suite, ['currentSlice' => 3, 'totalSlices' => 3]);
 
         $output = ob_get_clean();
 
         self::assertEquals("PHPUnit suite slicer, running slice 3/3 (5 tests: from #15 to #19)\n", $output);
-        self::assertCount(5, $suite);
+        self::assertCount(5, $modifiedSuite);
 
         $testsNames = array_map(function(TestCase $test) {
             return $test->getName();
-        }, $this->extractTestsInSuite($suite));
+        }, $this->extractTestsInSuite($modifiedSuite));
 
         self::assertEquals([
             'testM with data set #2',
