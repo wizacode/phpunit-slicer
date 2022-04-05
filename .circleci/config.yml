@@ -1,0 +1,121 @@
+version: 2.1
+
+commands:
+  checkout-alpine:
+    description: Install alpine requirements for checkout
+    steps:
+      - run:
+          name: "Install alpine requirements for checkout"
+          command: apk add git openssh-client curl make patch
+      - checkout
+
+  composer-install:
+    description: "Install dependencies"
+    steps:
+      - run:
+          name: "Execute: composer install"
+          command: |
+            if [ ! -f vendor/autoload.php ];then
+                curl https://getcomposer.org/composer-stable.phar --location --silent  --output /usr/bin/composer;
+                chmod +x /usr/bin/composer;
+                composer install --no-interaction --no-progress;
+            fi
+
+  restore-composer-cache:
+    description: "Restore vendor folder from CircleCI cache"
+    steps:
+      - restore_cache:
+          key: composer-{{ checksum "composer.json" }}
+
+  store-composer-cache:
+    description: "Store vendor folder in CircleCI cache"
+    steps:
+      - checkout-alpine
+      - restore-composer-cache
+      - composer-install
+      - save_cache:
+          key: composer-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
+      - persist_to_workspace:
+          root: .
+          paths:
+            - vendor
+
+  phpunit:
+    description: "Execute PHPUnit"
+    steps:
+      - run:
+          name: "Execute: PHPUnit"
+          command: vendor/bin/phpunit --testdox
+
+executors:
+  php74:
+    docker:
+      - image: php:7.4-cli-alpine
+    working_directory: ~/repository
+  php80:
+    docker:
+      - image: php:8.0-cli-alpine
+    working_directory: ~/repository
+  php81:
+    docker:
+      - image: php:8.1-cli-alpine
+    working_directory: ~/repository
+
+jobs:
+  composer74:
+    executor: php74
+    steps:
+      - store-composer-cache
+
+  phpunit74:
+    executor: php74
+    steps:
+      - checkout-alpine
+      - restore-composer-cache
+      - phpunit
+
+  composer80:
+    executor: php80
+    steps:
+      - store-composer-cache
+
+  phpunit80:
+    executor: php80
+    steps:
+      - checkout-alpine
+      - restore-composer-cache
+      - phpunit
+
+  composer81:
+    executor: php81
+    steps:
+      - store-composer-cache
+
+  phpunit81:
+    executor: php81
+    steps:
+      - checkout-alpine
+      - restore-composer-cache
+      - phpunit
+
+workflows:
+  Code quality PHP 7.4:
+    jobs:
+      - composer74
+      - phpunit74:
+          requires:
+            - composer74
+  Code quality PHP 8.0:
+    jobs:
+      - composer80
+      - phpunit80:
+          requires:
+            - composer80
+  Code quality PHP 8.1:
+    jobs:
+      - composer81
+      - phpunit81:
+          requires:
+            - composer81
