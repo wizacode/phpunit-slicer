@@ -6,15 +6,15 @@ use PHPUnit\Framework\TestCase;
 
 class CTest extends TestCase
 {
-    public function test I() { }
-    public function test J() { }
-    public function test K() { }
-    public function test L() { }
+    public function testI() { }
+    public function testJ() { }
+    public function testK() { }
+    public function testL() { }
 
     /**
      * @dataProvider dataProvider
      */
-    public function test M($a) { }
+    public function testM($a) { }
 
     public function dataProvider()
     {
@@ -27,6 +27,6 @@ class CTest extends TestCase
         ];
     }
 
-    public function test N() { }
-    public function test O() { }
+    public function testN() { }
+    public function testO() { }
 }

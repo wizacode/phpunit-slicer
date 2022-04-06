@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Wizaplace\PHPUnit\Slicer;
 
+use PHPUnit\Framework\TestSuite;
+
 class Command extends \PHPUnit\TextUI\Command
 {
     public function __construct()
@@ -51,8 +53,16 @@ Slices Options:
 EOT;
     }
 
-    protected function createRunner(): \PHPUnit\TextUI\TestRunner
+    protected function handleArguments(array $argv): void
     {
-        return new TestRunner($this->arguments['loader']);
+        parent::handleArguments($argv);
+
+        if (isset($this->arguments['totalSlices'], $this->arguments['currentSlice'], $this->arguments['test'])
+            && $this->arguments['test'] instanceof TestSuite
+        ) {
+            $localArguments = $this->arguments;
+
+            $this->arguments['test'] = TestSuiteSlicer::slice($this->arguments['test'], $localArguments);
+        }
     }
 }

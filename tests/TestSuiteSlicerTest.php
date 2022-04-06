@@ -33,93 +33,102 @@ class TestSuiteSlicerTest extends TestCase
         self::$tested = null;
     }
 
-    public function test slice first half()
+    public function testSliceReturnsATestSuiteObject(): void
+    {
+        $suite = clone self::$tested;
+
+        $modifiedSuite = TestSuiteSlicer::slice($suite, ['currentSlice' => 1, 'totalSlices' => 2]);
+
+        self::assertInstanceOf(TestSuite::class, $modifiedSuite);
+    }
+
+    public function testSliceFirstHalf()
     {
         $suite = clone self::$tested;
         self::assertCount(19, $suite);
 
         ob_start();
 
-        TestSuiteSlicer::slice($suite, ['currentSlice' => 1, 'totalSlices' => 2]);
+        $modifiedSuite = TestSuiteSlicer::slice($suite, ['currentSlice' => 1, 'totalSlices' => 2]);
 
         $output = ob_get_clean();
 
         self::assertEquals("PHPUnit suite slicer, running slice 1/2 (10 tests: from #1 to #10)\n", $output);
-        self::assertCount(10, $suite);
+        self::assertCount(10, $modifiedSuite);
 
         $testsNames = array_map(function(TestCase $test) {
             return $test->getName();
-        }, $this->extractTestsInSuite($suite));
+        }, $this->extractTestsInSuite($modifiedSuite));
 
         self::assertEquals([
-            'test A',
-            'test B',
-            'test C',
-            'test D',
-            'test E',
-            'test F',
-            'test G',
-            'test H',
-            'test I',
-            'test J',
+            'testA',
+            'testB',
+            'testC',
+            'testD',
+            'testE',
+            'testF',
+            'testG',
+            'testH',
+            'testI',
+            'testJ',
         ], $testsNames);
     }
 
-    public function test slice second half()
+    public function testSliceSecondHalf()
     {
         $suite = clone self::$tested;
         self::assertCount(19, $suite);
 
         ob_start();
 
-        TestSuiteSlicer::slice($suite, ['currentSlice' => 2, 'totalSlices' => 2]);
+        $modifiedSuite = TestSuiteSlicer::slice($suite, ['currentSlice' => 2, 'totalSlices' => 2]);
 
         $output = ob_get_clean();
 
         self::assertEquals("PHPUnit suite slicer, running slice 2/2 (9 tests: from #11 to #19)\n", $output);
-        self::assertCount(9, $suite);
+        self::assertCount(9, $modifiedSuite);
 
         $testsNames = array_map(function(TestCase $test) {
             return $test->getName();
-        }, $this->extractTestsInSuite($suite));
+        }, $this->extractTestsInSuite($modifiedSuite));
 
         self::assertEquals([
-            'test K',
-            'test L',
-            'test M with data set #0',
-            'test M with data set #1',
-            'test M with data set #2',
-            'test M with data set #3',
-            'test M with data set #4',
-            'test N',
-            'test O',
+            'testK',
+            'testL',
+            'testM with data set #0',
+            'testM with data set #1',
+            'testM with data set #2',
+            'testM with data set #3',
+            'testM with data set #4',
+            'testN',
+            'testO',
         ], $testsNames);
     }
 
-    public function test slice last third()
+    public function testSliceLastThird()
     {
         $suite = clone self::$tested;
         self::assertCount(19, $suite);
 
         ob_start();
 
-        TestSuiteSlicer::slice($suite, ['currentSlice' => 3, 'totalSlices' => 3]);
+        $modifiedSuite = TestSuiteSlicer::slice($suite, ['currentSlice' => 3, 'totalSlices' => 3]);
 
         $output = ob_get_clean();
 
         self::assertEquals("PHPUnit suite slicer, running slice 3/3 (5 tests: from #15 to #19)\n", $output);
-        self::assertCount(5, $suite);
+        self::assertCount(5, $modifiedSuite);
 
         $testsNames = array_map(function(TestCase $test) {
             return $test->getName();
-        }, $this->extractTestsInSuite($suite));
+        }, $this->extractTestsInSuite($modifiedSuite));
 
         self::assertEquals([
-            'test M with data set #2',
-            'test M with data set #3',
-            'test M with data set #4',
-            'test N',
-            'test O',
+            'testM with data set #2',
+            'testM with data set #3',
+            'testM with data set #4',
+            'testN',
+            'testO',
         ], $testsNames);
     }
 
